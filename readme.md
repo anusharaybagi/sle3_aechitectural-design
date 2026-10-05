@@ -1,154 +1,215 @@
-# CONTRIBUTION.md
+# BFS vs DFS – Empirical Performance Analysis System
 
-## Project Contribution
+## Project Overview
 
-This project focuses on the **BFS vs DFS – Empirical Performance Analysis System** using a 20-node graph from **A to T**. The system compares BFS and DFS using execution time, nodes expanded, and py-spy profiling.
+The **BFS vs DFS – Empirical Performance Analysis System** evaluates and compares the actual performance of **Breadth-First Search (BFS)** and **Depth-First Search (DFS)** on a **20-node graph from A to T**, starting from node A.
 
-## Contribution Areas
+The system measures:
 
-* Implemented the **BFS search algorithm** using a queue.
-* Implemented the **DFS search algorithm** using a stack.
-* Created the 20-node graph structure from **A to T**.
-* Defined the three goal cases:
+* Execution time using `time.perf_counter()`
+* Number of expanded nodes
+* Average execution time over 3 runs
+* Performance stack traces using py-spy
+* Flame graph output using `profile.svg`
 
-  * Best Case: A → B
-  * Average Case: A → C → G → M
-  * Worst Case: A → B → F → L → T
-* Counted the number of expanded nodes.
-* Measured execution time using `time.perf_counter()`.
-* Performed **3 benchmark runs per case**.
-* Calculated average execution time in milliseconds.
-* Used **py-spy** for performance stack profiling.
-* Generated the `profile.svg` flame graph.
-* Designed the complete **Full C4 Model** architecture.
-* Documented Context, Container, Component, and Code levels.
+The system architecture is documented using the **Full C4 Model**: Context, Container, Component, and Code.
 
-## Coding Guidelines
+---
 
-* Keep the code simple and readable.
-* Use meaningful function and variable names.
-* Keep BFS and DFS implementations separate.
-* Use a queue for BFS and a stack for DFS.
-* Maintain the same graph structure for both algorithms.
-* Use `time.perf_counter()` for execution timing.
-* Avoid unnecessary changes to the existing implementation.
-* Test the program after making changes.
+## Objectives
 
-## Testing
+1. Implement BFS and DFS search algorithms.
+2. Use a 20-node graph from A to T.
+3. Compare BFS and DFS performance.
+4. Count the number of expanded nodes.
+5. Measure execution time using `time.perf_counter()`.
+6. Run each test case 3 times.
+7. Calculate average execution time.
+8. Use py-spy for stack profiling.
+9. Generate the `profile.svg` flame graph.
+10. Represent the architecture using the Full C4 Model.
 
-The system should be tested for:
+---
 
-1. BFS traversal.
-2. DFS traversal.
-3. All nodes from A to T.
-4. Starting node A.
-5. Best Case: A → B.
-6. Average Case: A → C → G → M.
-7. Worst Case: A → B → F → L → T.
-8. Number of nodes expanded.
-9. Execution time.
-10. Average execution time over 3 runs.
-11. py-spy profiling.
-12. Generation of `profile.svg`.
+## Graph and Test Cases
 
-## Git Workflow
+The system starts searching from node **A**.
 
-1. Update the required project files.
-2. Test the implementation.
-3. Add the changes using Git.
-4. Commit the changes with a meaningful message.
-5. Push the changes to the repository.
-
-### Example Commit Messages
+### Best Case
 
 ```text
-Added BFS implementation
-Added DFS implementation
-Added 20-node graph
-Added performance benchmarking
-Added py-spy profiling
-Added Full C4 architecture
-Updated project documentation
+A → B
 ```
 
-## C4 Architecture Contribution
+### Average Case
 
-The project is documented using the **Full C4 Model**:
+```text
+A → C → G → M
+```
 
-### Level 1 – Context
+### Worst Case
 
-Shows the user interacting with the BFS vs DFS empirical performance analysis system.
+```text
+A → B → F → L → T
+```
 
-### Level 2 – Container
+The graph contains nodes from **A to T**.
 
-Includes:
+---
 
-* Graph Input & Case Configurator
-* Search Engine
-* BFS Module
-* DFS Module
-* Performance Profiler
-* Output / Results
+# Full C4 Model
 
-### Level 3 – Component
+## Level 1 – Context Diagram
 
-The Search Engine contains:
+The Context level shows the interaction between the **user** and the BFS vs DFS performance analysis system.
 
-* Frontier
-* Visited Set
-* Goal Test
-* Node Counter & Timer
+The user triggers the search on the 20-node A–T graph.
 
-### Level 4 – Code
+The system returns:
 
-The main code elements include:
+* Execution timing
+* Node expansion count
+* py-spy flame graph
 
-* `bfs(graph, start, goal)`
-* `dfs(graph, start, goal)`
-* `graph`
-* `profile_search.py`
+---
 
-## Performance Analysis
+## Level 2 – Container Diagram
 
-The system compares BFS and DFS using two main performance measures:
+The system contains the following containers:
 
-* **Execution time**
-* **Number of nodes expanded**
+### 1. Graph Input & Case Configurator
 
-The benchmark runs each case three times using `time.perf_counter()` and records the average execution time.
+Stores the 20-node graph topology and defines the Best, Average, and Worst test cases.
 
-## Profiling Contribution
+### 2. Search Engine
 
-The project uses **py-spy** to record performance stack traces and generate a flame graph:
+Controls the execution flow and invokes the search algorithms.
+
+### 3. BFS Module
+
+Performs Breadth-First Search using a queue and explores nodes level by level.
+
+### 4. DFS Module
+
+Performs Depth-First Search using a stack and explores deep branches.
+
+### 5. Performance Profiler
+
+Uses `time.perf_counter()` for timing and py-spy for stack profiling.
+
+### 6. Output / Results
+
+Displays:
+
+* Average execution time
+* Nodes expanded
+* `profile.svg`
+
+---
+
+## Level 3 – Component Diagram
+
+The Search Engine consists of four components:
+
+### Frontier
+
+Stores undiscovered frontier nodes.
+
+* BFS → `collections.deque` queue
+* DFS → list stack
+
+### Visited Set
+
+Keeps track of visited nodes and prevents cyclic loops.
+
+### Goal Test
+
+Checks whether the current node reaches the target goal.
+
+### Node Counter & Timer
+
+Counts expanded nodes and measures execution time using `time.perf_counter()`.
+
+---
+
+## Level 4 – Code Level
+
+The main code elements are:
+
+```text
+bfs(graph, start, goal)
+dfs(graph, start, goal)
+graph
+profile_search.py
+```
+
+* `bfs()` performs level-by-level search.
+* `dfs()` performs deep-branch search.
+* `graph` stores the 20-node adjacency structure.
+* `profile_search.py` runs the benchmark 3 times per case and uses `time.perf_counter()`.
+
+---
+
+## Performance Measurement
+
+The system uses:
+
+```python
+time.perf_counter()
+```
+
+to measure execution time.
+
+Each test case is executed **3 times**, and the average execution time is calculated.
+
+The system also counts the number of nodes expanded to evaluate the algorithmic effort.
+
+---
+
+## Py-Spy Profiling
+
+The system uses **py-spy** to record performance stack traces.
+
+Example command:
+
+```bash
+py-spy record -o profile.svg -- python profile_search.py
+```
+
+The profiling output is:
 
 ```text
 profile.svg
 ```
 
-The profiling helps visualize the execution behaviour of the search system.
+This provides a flame graph visualizing the program's stack activity.
 
-## Design Contribution
+---
 
-The architecture separates:
+## Design Decisions
 
-* Graph definition
-* Search algorithm traversal
-* Performance timing
-* Node expansion counting
-* Stack profiling
+* The graph is represented using standard Python dictionaries and functions.
+* BFS and DFS are kept separate to show the difference between **FIFO queue** and **LIFO stack**.
+* `time.perf_counter()` is used for high-precision timing.
+* Node expansion counting is used along with execution time.
+* The architecture separates graph definition, algorithm traversal, timing, and stack profiling.
 
-BFS uses a **FIFO queue**, while DFS uses a **LIFO stack**, making their traversal behaviour and performance differences clear.
+---
 
 ## AI Contribution
 
-AI tools were used to:
+AI was used to help:
 
 * Structure the Full C4 Model documentation.
-* Format Context, Container, Component, and Code levels.
+* Format the Context, Container, Component, and Code levels.
 * Prepare Mermaid diagram representations for draw.io.
 
-The **program implementation, benchmarking execution, node counting, and py-spy profile generation were conducted by the student**.
+The program implementation, benchmarking execution, node counting, and py-spy profile generation were conducted by the student.
+
+---
 
 ## Conclusion
 
-The contribution provides a complete architectural design and empirical performance analysis of BFS and DFS. The Full C4 Model connects the system context with the specific functions in `profile_search.py` and shows how queue-based and stack-based traversal affect node expansion and execution runtime.
+The Full C4 Model provides a clear architectural view of the BFS vs DFS empirical profiling system.
+
+It connects the overall system context to the specific functions in `profile_search.py` and makes the effect of **queue-based BFS and stack-based DFS** on node expansion and execution runtime clear.
